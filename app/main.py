@@ -17,7 +17,7 @@ def get_beach_data():
     # List objects in the bucket
     response = s3.list_objects_v2(Bucket=s3_bucket_name, Prefix='clean_data')
 
-    # Filter CSV files
+    # Find CSV files
     csv_files = [obj['Key'] for obj in response['Contents'] if obj['Key'].lower().endswith('.csv')]
 
     # # Get the most recent CSV file
@@ -80,13 +80,14 @@ def beach_table(beach_selection):
 
     df = pd.read_csv(s3_directory + '/highres_geocode_beaches.csv')
     # df = df.query("name.isin(@beach_selection)")
-    df['beach_town'] = df['county'].combine_first(df['city']).combine_first(df['city_district'])
+    df['beach_town'] = df['town'].combine_first(df['county']).combine_first(df['city'])
     display_columns = ['name', 'google_maps_link', 'risk_level', 'beach_town']
     df = df[display_columns]
 
-    # Function to apply conditional styling
-
-    def highlight_low(val):
+    def highlight_df(val):
+        """
+        Function to apply conditional styling to pandas dataframe
+        """
         if 'LOW' in val:
             return 'background-color: green;'
         elif 'MODERATE' in val:
@@ -95,7 +96,7 @@ def beach_table(beach_selection):
             return 'background-color: red;'
 
     # Apply the styling function to the DataFrame
-    styled_df = df.style.applymap(highlight_low, subset=['risk_level'])
+    styled_df = df.style.applymap(highlight_df, subset=['risk_level'])
 
     return styled_df
 
@@ -116,7 +117,7 @@ st.dataframe(
     beach_table(beach_selection),  # provide filtered df
     column_config={
         "name": "Beach Name",
-        "beach_town": "Location",
+        "beach_town": "Town in Puerto Rico",
         "risk_level": "Risk Level",
         "google_maps_link": st.column_config.LinkColumn("Location Link"),
     },

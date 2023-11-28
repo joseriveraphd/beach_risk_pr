@@ -50,7 +50,7 @@ def compute_beach_centroids() -> gpd.GeoDataFrame:
     Compute centroid of all beaches with polygon objects
     """
 
-    beach_by_zone = pd.read_csv(s3_directory + '/final_beach_list_zones_geom.csv')  # contains surf zone and beach geometry
+    beach_by_zone = pd.read_csv(s3_directory + '/final_beach_list_zones_geom.csv')  # contains zone and geometry
     beach_by_zone['geometry'] = beach_by_zone['geometry'].apply(
         wkt.loads)  # gpd is unable to convert geometry from csv, so need wkt conversion.
 
@@ -62,9 +62,6 @@ def compute_beach_centroids() -> gpd.GeoDataFrame:
     # Access the centroid attribute of each polygon
     gdf["centroid"] = gdf.centroid
 
-    # Project to WGS84 geographic crs
-
-    # geometry (active) column
     gdf = gdf.to_crs(epsg=4326)
 
     # Centroid column
@@ -89,12 +86,14 @@ def assign_beach_risk_level() -> gpd.GeoDataFrame:
     rip_cs = gpd.GeoDataFrame(rip_stations, geometry=gpd.points_from_xy(rip_stations.long, rip_stations.lat))
     rip_cs.crs = "EPSG:4326"
 
-    # The tricky join
+    # Find centroid for each beach polygonal object
     beach = compute_beach_centroids()
 
+    # Assign geospatial projections
     beach.to_crs(epsg=4326)
     rip_cs.to_crs(epsg=4326)
 
+    # Perform geospatial join
     join_beaches = beach.sjoin_nearest(rip_cs, how="inner", max_distance=1)
     return join_beaches
 
