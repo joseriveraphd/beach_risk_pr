@@ -8,11 +8,19 @@ import os
 s3_bucket_name = os.environ.get('S3_BUCKET_NAME')
 s3_directory = os.environ.get('S3_BUCKET_DIRECTORY')
 
+aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+
 def get_beach_data():
     """
     Retrieve processed beach data from S3
     """
-    s3 = boto3.session.Session().client('s3')
+    s3 = boto3.session.Session().client(
+        's3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
+    )
 
     # List objects in the bucket
     response = s3.list_objects_v2(Bucket=s3_bucket_name, Prefix='clean_data')

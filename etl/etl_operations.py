@@ -6,6 +6,8 @@ from shapely import wkt
 import os
 
 s3_directory = os.environ.get('S3_BUCKET_DIRECTORY')
+aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
 ###########
 # Extract:
