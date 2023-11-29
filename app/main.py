@@ -123,6 +123,7 @@ beach_selection = plot_beach_map()
 
 st.dataframe(
     beach_table(beach_selection),  # provide filtered df
+    column_order=("name", "risk_level", "beach_town", "google_maps_link"),
     column_config={
         "name": "Beach Name",
         "beach_town": "Town in Puerto Rico",
