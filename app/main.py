@@ -109,7 +109,7 @@ def beach_table(beach_selection):
     return styled_df
 
 
-st.set_page_config(layout="wide")  # Adjust layout based on content
+st.set_page_config(layout="wide", page_title="Puerto Rico Beach Rip Currents")  # Adjust layout based on content
 
 st.title('Puerto Rico Beach Risk Levels')
 st.markdown(
