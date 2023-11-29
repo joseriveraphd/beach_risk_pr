@@ -106,8 +106,8 @@ st.set_page_config(layout="wide")  # Adjust layout based on content
 st.title('Puerto Rico Beach Risk Levels')
 st.markdown(
     """
-    This is experimental rip current risk data retrieved from the National Weather Prediction Service. 
-    Weather conditions can change quickly. For more information on rip current safety, visit https://www.weather.gov/safety/ripcurrent 
+    This is experimental rip current risk data (sourced primarily from the National Weather Prediction Service). 
+    Maritime conditions can change quickly, so please always be cautious when going to the beach. For more information on rip current safety, visit https://www.weather.gov/safety/ripcurrent . 
     """
 )
 
