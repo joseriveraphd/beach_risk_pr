@@ -129,7 +129,7 @@ st.dataframe(
         "risk_level": "Risk Level",
         "google_maps_link": st.column_config.LinkColumn("Location Link"),
     },
-    hide_index=True
+    hide_index=True, use_container_width=True
 )
 
 
