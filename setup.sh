@@ -2,7 +2,7 @@ mkdir -p ~/.streamlit/
 
 echo "\
 [theme]
-base='dark'
+base='light'
 [server]\n\
 headless = true\n\
 enableCORS=false\n\
