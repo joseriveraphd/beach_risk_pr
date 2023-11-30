@@ -1,2 +1,7 @@
-[theme]
-base='dark'
+
+
+
+#echo "\
+#[general]\n\
+#email = \"joseriveraphd1@gmail.com\"\n\
+#" > ~/.streamlit/credentials.toml
