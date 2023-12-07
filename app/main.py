@@ -4,6 +4,7 @@ from streamlit_folium import folium_static
 import pandas as pd
 import boto3
 import os
+import streamlit_analytics
 
 s3_bucket_name = os.environ.get('S3_BUCKET_NAME')
 s3_directory = os.environ.get('S3_BUCKET_DIRECTORY')
@@ -111,6 +112,8 @@ def beach_table(beach_selection):
 
 st.set_page_config(layout="wide", page_title="Puerto Rico Beach Rip Currents")  # Adjust layout based on content
 
+streamlit_analytics.start_tracking()
+
 st.title('Puerto Rico Beach Risk Levels')
 st.markdown(
     """
@@ -118,6 +121,8 @@ st.markdown(
     Maritime conditions can change quickly, so please always be cautious when going to the beach. For more information on rip current safety, visit https://www.weather.gov/safety/ripcurrent . 
     """
 )
+streamlit_analytics.stop_tracking()
+
 
 beach_selection = plot_beach_map()
 
